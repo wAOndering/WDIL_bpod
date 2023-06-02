@@ -8,11 +8,11 @@ It also contains python scripts to extract data from the Matlab files:
 
 ## Resources:
 * This folder contains the portocol used with bpod [protocols](https://github.com/wAOndering/WDIL_bpod/Bpod_resources/Bpod%20Local/Protocols)
-* `WDIL protocol` Adapted by Diana Balazsfi is the following protocol for WDIL with bpod [wdil_protocol](https://github.com/wAOndering/WDIL_bpod/Bpod_resources/Bpod%20Local/Protocols/newwhiskerstim/newwhiskerstim.m")
+* `WDIL protocol` Adapted by Diana Balazsfi is the following protocol for WDIL with bpod [wdil_protocol](https://github.com/wAOndering/WDIL_bpod/Bpod_resources/Bpod%20Local/Protocols/newwhiskerstim/newwhiskerstim.m)
 
-* `Lickport protocol` Adapted by Diana Balazsfi is the following protocol forlick port training only with bpod [wdil_protocol](https://github.com/wAOndering/WDIL_bpod/Bpod_resources/Bpod%20Local/Protocols/Licktraining_bpod/Licktraining_bpod.m")
+* `Lickport protocol` Adapted by Diana Balazsfi is the following protocol forlick port training only with bpod [wdil_protocol](https://github.com/wAOndering/WDIL_bpod/Bpod_resources/Bpod%20Local/Protocols/Licktraining_bpod/Licktraining_bpod.m)
 
-* List of variables and structure within .mat file output https://github.com/wAOndering/WDIL_bpod/variableList.md"
+* List of variables and structure within .mat file output https://github.com/wAOndering/WDIL_bpod/variableList.md
 
 * See the original code repo for the bpod system [here](https://github.com/sanworks/Bpod_Gen2)
 ## Usage:
