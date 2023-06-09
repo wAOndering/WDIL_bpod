@@ -19,8 +19,8 @@ It also contains python scripts to extract data from the Matlab files:
 ### instruction
 *  install [Anaconda](https://www.anaconda.com/)
 *  Start Anaconda command prompt
-*  In the command prompt type: `python` then `space`
-*  Drag and drop the file `dataExtraction.py` then press `Enter`
+*  In the command prompt type: `python `
+*  Drag and drop the file `dataExtraction.py` in the command prompt or enter the file path (eg. "C:\git\WDIL_bpod\dataExtraction.py") then press `Enter`
 *  Follow the instructions<!-- add `space` before drag and drop the **Folder** containing the files of interest -->
 *  press `Enter`
 

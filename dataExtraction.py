@@ -438,7 +438,7 @@ class matExtraction:
 
 # isolate and get only the lickport training data
 
-tmpFol = r'Y:\Vaissiere\New folder'
+# tmpFol = r'Y:\Vaissiere\New folder'
 ## run accross all the folder 
 ## TODO should discriminate for the file in the class between lick port analysis or wdil
 
@@ -471,7 +471,6 @@ def lickportAnalysis():
     print(exportFolder+'globalSummary.csv')
 
 def lickWDILAnalysis():
-    tmpFol =  r'Y:\Vaissiere\New folder'##<<------- to be deleted
     matFiles = list(set(glob.glob(tmpFol+'/**/*newwhiskerstim*.mat', recursive=True))-set(glob.glob(tmpFol+'/**/*DefaultSettings.mat', recursive=True)))
 
     wdil_perf_trials_ALL = []
