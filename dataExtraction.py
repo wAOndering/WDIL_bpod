@@ -41,7 +41,8 @@ print('Select the type of analysis:')
 print("1: lickport training")
 print("2: wdil data")
 print("3: lickport training and wdil data")
-analysisType = input('make a selection (1,2 or 3):')
+print("4: obtain the genotpye for analyzed data and session order if not present")
+analysisType = input('make a selection (1, 2, 3 or 4):')
 print('-------------------------------------------')
 print('')
 
@@ -466,9 +467,10 @@ def lickportAnalysis():
     allLickSummary.to_csv(exportFolder+os.sep+'allLickSummary_lickport.csv')
     allDatSummary.to_csv(exportFolder+os.sep+'globalSummary_lickport.csv')
 
-    print('Outputs are located here:')
-    print(exportFolder+'allLickSummary.csv')
-    print(exportFolder+'globalSummary.csv')
+    print(' ')
+    print('Outputs for licport are located here:')
+    print(exportFolder+os.sep+'allLickSummary.csv')
+    print(exportFolder+os.sep+'globalSummary.csv')
 
 def lickWDILAnalysis():
     matFiles = list(set(glob.glob(tmpFol+'/**/*newwhiskerstim*.mat', recursive=True))-set(glob.glob(tmpFol+'/**/*DefaultSettings.mat', recursive=True)))
@@ -536,6 +538,9 @@ def lickWDILAnalysis():
                'wdil_reactionTime': licks_reactionTime_summary_ALL, 
                'wdil_Licks_byCat': licks_allTrials_summary_ALL}
     
+    print(' ')
+    print('Outputs for wdil are located here:')
+    
     for k in dataOut:
         try:
             tmp = pd.concat(dataOut[k])
@@ -543,6 +548,8 @@ def lickWDILAnalysis():
             exportFolder = tmpFol+os.sep+'Analysis'+os.sep+'WDIL_data'
             os.makedirs(exportFolder,exist_ok=True)
             tmp.to_csv(exportFolder+os.sep+k+'.csv')
+            print(exportFolder+os.sep+k+'.csv')
+
         except:
             print('no')
 
@@ -554,3 +561,36 @@ elif analysisType == str(2):
 elif analysisType == str(3):
     lickWDILAnalysis()
     lickportAnalysis()
+elif analysisType == str(4):
+    print('')
+    print('-------------------------------------------')
+    analFol = input("Drag the parent folder/directory with all the analyzed data (eg. .../Analysis) and press Enter:")
+    analFol = analFol.replace('\\','/')
+    analFol = analFol.replace('"','')
+    print('-------------------------------------------')
+    print('')
+
+    print('')
+    print('-------------------------------------------')
+    genoKey = input("Drag the file with the genotype data (eg. .../genotype.csv) and press Enter:")
+    genoKey = genoKey.replace('\\','/')
+    genoKey = genoKey.replace('"','')
+    print('-------------------------------------------')
+    print('')
+
+    if genoKey.split('.')[-1] == 'csv' | :
+        genoKey = pd.read_csv(genoKey)
+    else:
+        genoKey = pd.read_excel(genoKey)
+    else:
+        print('The genotype file should be either xlsx or csv format')
+
+
+    files = glob.glob(analFol+'/**/*.csv', recursive=True)
+    for i in files:
+        print(i)
+        tmp = pd.read_csv(i)
+        tmp = pd.merge(tmp, genoKey, on='sID', how='outer')
+        tmp.sort_values(['sID','sessionDate','sessionTime'], inplace=True)
+        tmp['sessionOrder'] = tmp.groupby('sID').cumcount() + 1
+        tmp.to_csv(i)
