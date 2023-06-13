@@ -449,7 +449,7 @@ def lickportAnalysis():
     allDatSummary = []
     allLickSummary = []
     for i in tqdm.tqdm(matFiles):
-        print(i)
+        # print(i)
         a = matExtraction(i)
         tmp = a.getSessionInfoLickTrain_summary()
         tmpt = a.getLicks_summary()
@@ -481,7 +481,7 @@ def lickWDILAnalysis():
     licks_reactionTime_summary_ALL =  []
     licks_allTrials_summary_ALL = []
     for i in tqdm.tqdm(matFiles):
-        print(i)
+        # print(i)
         try:
             a = matExtraction(i)
             #get all the wdil data
@@ -582,9 +582,6 @@ elif analysisType == str(4):
         genoKey = pd.read_csv(genoKey)
     else:
         genoKey = pd.read_excel(genoKey)
-        if genoKey == []:
-            print('The genotype file should be either xlsx or csv format')
-
 
     files = glob.glob(analFol+'/**/*.csv', recursive=True)
     for i in files:
