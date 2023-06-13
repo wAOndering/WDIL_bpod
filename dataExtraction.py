@@ -578,12 +578,12 @@ elif analysisType == str(4):
     print('-------------------------------------------')
     print('')
 
-    if genoKey.split('.')[-1] == 'csv' | :
+    if genoKey.split('.')[-1] == 'csv':
         genoKey = pd.read_csv(genoKey)
     else:
         genoKey = pd.read_excel(genoKey)
-    else:
-        print('The genotype file should be either xlsx or csv format')
+        if genoKey == []:
+            print('The genotype file should be either xlsx or csv format')
 
 
     files = glob.glob(analFol+'/**/*.csv', recursive=True)
