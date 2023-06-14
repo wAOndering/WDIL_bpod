@@ -151,15 +151,27 @@ class matExtraction:
         datSum = dat.sum().item()
         dat = dat.T
         ## below a try except structure is necessary just in case some of the cases of configuration do not appear in a session
-        for k in ['CR','FA','Hit','Miss']:
-            try:
-                dat[k+'_rate'] = dat[k].item()/datSum
-            except:
-                dat[k+'_rate'] = 0
-                dat[k] = 0
+
+        
+
         dat['Go'] = dat['Hit']+dat['Miss']
         dat['noGo'] = dat['CR']+dat['FA']
         dat['Go_rate'] = dat['Go']/datSum
+        for k in ['CR','FA']:
+            try:
+                dat[k+'_rate'] = dat[k].item()/dat['noGo'].item()
+            except:
+                dat[k+'_rate'] = 0
+                dat[k] = 0
+        
+        for k in ['Hit','Miss']:
+            try:
+                dat[k+'_rate'] = dat[k].item()/dat['Go'].item()
+            except:
+                dat[k+'_rate'] = 0
+                dat[k] = 0
+
+
         dat['total_correct'] = (dat['CR']+dat['Hit'])/datSum
         dat["d'"] =  norm.ppf(dat['Hit_rate'])- norm.ppf(dat['FA_rate'])
         dat['sID'] = self.sID
