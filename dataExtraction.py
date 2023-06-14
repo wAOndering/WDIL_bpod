@@ -147,31 +147,26 @@ class matExtraction:
 
     def getSessionInfoWisker_summary(self):
         dat = self.getSessionInfoWisker()
-        dat = dat.groupby(['outcome']).agg({'trials': [np.ma.count]})#, 'frame': ['first']})
-        datSum = dat.sum().item()
-        dat = dat.T
-        ## below a try except structure is necessary just in case some of the cases of configuration do not appear in a session
+        datb = dat.groupby(['outcome']).agg({'trials': [np.ma.count]})#, 'frame': ['first']})
+        datSum = datb.sum().item()
+        datb = datb.T
 
-        
+        datc = dat.groupby(['Go_noGo']).agg({'trials': [np.ma.count]})#, 'frame': ['first']})
+        datSum = datc.sum().item()
+        datc = datc.T
 
-        dat['Go'] = dat['Hit']+dat['Miss']
-        dat['noGo'] = dat['CR']+dat['FA']
+        dat = pd.concat([datb, datc], axis=1)
+        ## below a try except structure is necessary just in case some of the cases of configuration do not appear in a session            
         dat['Go_rate'] = dat['Go']/datSum
-        for k in ['CR','FA']:
-            try:
-                dat[k+'_rate'] = dat[k].item()/dat['noGo'].item()
-            except:
-                dat[k+'_rate'] = 0
-                dat[k] = 0
+        dat = dat.rename(columns={'NoGo':'noGo'})
         
-        for k in ['Hit','Miss']:
+        for k in zip(['CR','FA','Hit','Miss'], [dat['noGo'].item(), dat['noGo'].item(), dat['Go'].item(), dat['Go'].item()]):
             try:
-                dat[k+'_rate'] = dat[k].item()/dat['Go'].item()
+                dat[k[0]+'_rate'] = dat[k[0]].item()/k[1]
             except:
-                dat[k+'_rate'] = 0
-                dat[k] = 0
-
-
+                dat[k[0]+'_rate'] = 0
+                dat[k[0]] = 0
+        
         dat['total_correct'] = (dat['CR']+dat['Hit'])/datSum
         dat["d'"] =  norm.ppf(dat['Hit_rate'])- norm.ppf(dat['FA_rate'])
         dat['sID'] = self.sID
