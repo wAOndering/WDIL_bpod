@@ -385,17 +385,23 @@ class matExtraction:
             licks_singleTrial['type'] = classification
             licks_allTrials.append(licks_singleTrial)
 
+            ## get the actual reaction time 
+            react_tmp = licks_singleTrial
+            # print(react_tmp)
+            reactZero = react_tmp.loc[react_tmp['Interval_cat']=='ToneStim','Interval_stop'].item()
+            reactVal = react_tmp.loc[react_tmp['Interval_cat']=='postResponse','Interval_start'].item()
+
             ### Get the reaction time
             reactionTime = pd.DataFrame({
-                'reactionTime':stateTiming.loc[stateTiming['stateName']=='ResponseState','stateTime'],
+                'ResponseState':stateTiming.loc[stateTiming['stateName']=='ResponseState','stateTime'], ## reactionTime
+                'reactZero': reactZero,
+                'reactVal': reactVal,
+                'reactionTime': reactVal-reactZero,
                 'trials':[trialN]})
             reactionTime_allTrials.append(reactionTime)
 
         reactionTime_allTrials = pd.concat(reactionTime_allTrials)
         licks_allTrials = pd.concat(licks_allTrials)
-
-
-
 
         return licks_allTrials, reactionTime_allTrials
 
@@ -480,6 +486,7 @@ def lickportAnalysis():
     print(exportFolder+os.sep+'globalSummary.csv')
 
 def lickWDILAnalysis():
+    # tmpFol = r"Y:\Sheldon\All_WDIL\S1WDIL"
     matFiles = list(set(glob.glob(tmpFol+'/**/*newwhiskerstim*.mat', recursive=True))-set(glob.glob(tmpFol+'/**/*DefaultSettings.mat', recursive=True)))
 
     wdil_perf_trials_ALL = []
